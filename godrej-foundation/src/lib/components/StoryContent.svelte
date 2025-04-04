@@ -4,7 +4,7 @@
 			<aside
 				class="flex flex-col items-center pb-6 text-center lg:sticky lg:top-8 lg:max-w-[200px] lg:items-start lg:pr-6 lg:pb-0 lg:text-left"
 			>
-				<p class="mb-4 text-sm text-gray-500">22 May 2025</p>
+				<p class="mb-4 text-sm md:text-lg text-gray-500">22 May 2025</p>
 				<div
 					class="flex w-full items-center space-x-4 border-y border-dashed border-gray-400 py-4 lg:flex-col lg:items-start"
 				>
@@ -12,16 +12,16 @@
 						<img src="/images/avanti-logo.png" alt="Avanti Fellows Logo" class="rounded-full" />
 					</div>
 					<div class="text-left">
-						<h3 class="text-lg font-semibold">Avanti Fellows</h3>
+						<h3 class="text-sm md:text-lg font-semibold">Avanti Fellows</h3>
 						<p class="text-gray-500">Unlocking the potential of rural India</p>
 					</div>
 				</div>
 			</aside>
 
 			<div class="flex-1">
-				<div class="space-y-6 lg:max-w-[600px]">
+				<div class="space-y-6 lg:max-w-[510px]">
 					<p
-						class="text-lg leading-relaxed first-letter:float-left first-letter:mr-1 first-letter:text-5xl first-letter:leading-none first-letter:font-bold"
+						class="text-sm md:text-lg leading-relaxed first-letter:float-left first-letter:mr-1 first-letter:text-5xl first-letter:leading-none first-letter:font-bold"
 					>
 						More of an accident that the Wenner-Gren Foundation for Anthropological Research exists.
 						In 1941 Axel Wenner-Gren, founder of the Electro-Lux Corporation (and one of the richest
@@ -32,7 +32,7 @@
 						Renamed in 1951, the Wenner-Gren Foundation quickly became a key actor in this
 						discipline.
 					</p>
-					<p class="text-lg leading-relaxed">
+					<p class="text-sm md:text-lg leading-relaxed">
 						It's somewhat of an accident that the Wenner-Gren Foundation for Anthropological
 						Research exists. In 1941, Axel Wenner-Gren, founder of the Electro-Lux Corporation (and
 						one of the richest men in the world), created the Viking Fund to resolve tax issues
@@ -54,21 +54,21 @@
 					fugit deserunt eos numquam ipsam repellendus dolorem.
 				</p>
 			</blockquote>
-			<div class="mx-auto my-8 h-16 w-[3px] bg-gray-400"></div>
-			<p class="text-center text-xl font-bold">
+			<div class="mx-auto my-8 h-10 md:h-16 w-[3px] bg-gray-400"></div>
+			<p class="text-center text-lg md:text-xl font-bold">
 				<cite class="text-gray-600 not-italic">John Doe</cite>
 			</p>
 		</div>
 
-		<div class="mx-auto max-w-lg px-4 py-8">
-			<p class="text-lg">
+		<div class="mx-auto lg:max-w-[510px]">
+			<p class="text-sm md:text-lg">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ullam est! Dolor numquam,
 				tempora dolorem omnis natus molestiae similique blanditiis qui temporibus velit deleniti quo
 				aut neque id esse! Reiciendis! Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 				Minima tenetur quidem saepe aliquam numquam commodi ut repudiandae ipsam, dolorem laborum,
 				blanditiis animi? Nam ipsam atque odit harum quis nihil quia!
 			</p>
-			<p class="mt-5 text-lg">
+			<p class="mt-5 text-sm md:text-lg">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ullam est! Dolor numquam,
 				tempora dolorem omnis natus molestiae similique blanditiis qui temporibus velit deleniti quo
 				aut neque id esse! Reiciendis! Lorem ipsum dolor sit amet consectetur
@@ -79,14 +79,14 @@
 				<figcaption class="text-left text-sm text-gray-600">City Scape Design</figcaption>
 			</figure>
 
-			<p class="text-lg">
+			<p class="text-sm md:text-lg">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ullam est! Dolor numquam,
 				tempora dolorem omnis natus molestiae similique blanditiis qui temporibus velit deleniti quo
 				aut neque id esse! Reiciendis! Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 				Minima tenetur quidem saepe aliquam numquam commodi ut repudiandae ipsam, dolorem laborum,
 				blanditiis animi? Nam ipsam atque odit harum quis nihil quia!
 			</p>
-			<p class="mt-5 text-lg">
+			<p class="mt-5 text-sm md:text-lg">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ullam est! Dolor numquam,
 				tempora dolorem omnis natus molestiae similique blanditiis qui temporibus velit deleniti quo
 				aut neque id esse! Reiciendis!
@@ -94,14 +94,14 @@
 
 			<img src="/images/dotted-design-2.png" alt="Dotted design" class="my-5 w-full" />
 
-			<p class="text-lg">
+			<p class="text-sm md:text-lg">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ullam est! Dolor numquam,
 				tempora dolorem omnis natus molestiae similique blanditiis qui temporibus velit deleniti quo
 				aut neque id esse! Reiciendis! Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 				Minima tenetur quidem saepe aliquam numquam commodi ut repudiandae ipsam, dolorem laborum,
 				blanditiis animi? Nam ipsam atque odit harum quis nihil quia!
 			</p>
-			<p class="mt-5 text-lg">
+			<p class="mt-5 text-sm md:text-lg">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ullam est! Dolor numquam,
 				tempora dolorem omnis natus molestiae similique blanditiis qui temporibus velit deleniti quo
 				aut neque id esse! Reiciendis!
@@ -112,20 +112,20 @@
 				<figcaption class="text-left text-sm text-gray-600">City Scape Design</figcaption>
 			</figure>
 
-			<p class="text-lg">
+			<p class="text-sm md:text-lg">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ullam est! Dolor numquam,
 				tempora dolorem omnis natus molestiae similique blanditiis qui temporibus velit deleniti quo
 				aut neque id esse! Reiciendis! Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 				Minima tenetur quidem saepe aliquam numquam commodi ut repudiandae ipsam, dolorem laborum,
 				blanditiis animi? Nam ipsam atque odit harum quis nihil quia!
 			</p>
-			<p class="mt-5 text-lg">
+			<p class="mt-5 text-sm md:text-lg">
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ullam est! Dolor numquam,
 				tempora dolorem omnis natus molestiae similique blanditiis qui temporibus velit deleniti quo
 				aut neque id esse! Reiciendis!
 			</p>
 
-			<p class="mt-6 flex text-sm font-bold uppercase md:mt-12">
+			<p class="mt-6 flex text-sm md:text-lg font-bold uppercase md:mt-12">
 				<span class=" text-gray-500">TAGS</span>
 				<a href="/" class=" ml-5 hover:underline">child development</a> ,
 				<a href="/" class=" ml-2 hover:underline">education</a> ,

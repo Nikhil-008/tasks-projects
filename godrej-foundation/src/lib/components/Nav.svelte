@@ -35,7 +35,7 @@
 					<div class="nav-menu-container">
 						<div class="flex flex-col space-y-4">
 							<a href="/" class="nav-link">Home</a>
-							<a href="/about" class="nav-link">About</a>
+							<a href="/signature-meal-plan" class="nav-link">signature-meal-plan</a>
 							<a href="/services" class="nav-link">Services</a>
 						</div>
 					</div>
@@ -57,7 +57,7 @@
 			<div class="nav-menu-container">
 				<div class="flex flex-col items-center space-y-4">
 					<a href="/" class="nav-link">Home</a>
-					<a href="/about" class="nav-link">About</a>
+					<a href="/signature-meal-plan" class="nav-link">signature-meal-plan</a>
 					<a href="/services" class="nav-link">Services</a>
 				</div>
 			</div>
