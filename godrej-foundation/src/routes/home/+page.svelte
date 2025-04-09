@@ -3,7 +3,7 @@
   import plans from '$lib/data/subscription-data.json';
 </script>
 
-<main class="max-w-6xl mx-auto p-6 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<main class="max-w-8xl mx-auto p-6 mt-10 flex flex-wrap gap-y-12">
   {#each plans as plan}
     <MealCard {plan} />
   {/each}

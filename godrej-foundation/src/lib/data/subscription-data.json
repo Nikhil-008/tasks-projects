@@ -1,0 +1,463 @@
+[
+	{
+		"id": "9ee9cb43-313d-42c3-90eb-0d3846af493d",
+		"name": "Signature Meals",
+		"frequency": 1,
+		"interval": "day",
+		"deliveries_per_interval": 3,
+		"account_id": "05b632ef-5463-41e1-8318-478165ed4b72",
+		"created_at": "2025-02-06T07:51:28.491Z",
+		"updated_at": "2025-02-06T07:51:30.534Z",
+		"trial_available": true,
+		"trial_duration_frequency": 3,
+		"trial_duration_interval": "day",
+		"durations": [
+			{
+				"interval": "week",
+				"frequency": 1
+			},
+			{
+				"interval": "week",
+				"frequency": 2
+			},
+			{
+				"interval": "month",
+				"frequency": 1
+			},
+			{
+				"interval": "month",
+				"frequency": 2
+			},
+			{
+				"interval": "month",
+				"frequency": 3
+			}
+		],
+		"trial_coupon_campaign_id": "340b8a6d-9076-4816-94b5-59f926741014",
+		"can_select_day_pattern": true,
+		"product": {
+			"id": "f45b8ff3-f6d3-4b0c-be0c-c4a5781a7871",
+			"name": "Subscription Plan - Signature Meals",
+			"slug": "subscription-plan-signature-meals",
+			"status": "draft",
+			"kind": "basic",
+			"variant_attributes": null,
+			"content": {
+				"summary": "The Signature Plan offers a curated collection of wholesome meals, from hearty breakfasts to satisfying dinners, featuring fresh ingredients and balanced flavors to nourish your day.",
+				"description": "The Signature Plan is designed to provide a complete culinary journey, starting with energizing breakfasts like fluffy idlis and flavorful chutneys, followed by hearty lunches featuring dishes such as grilled fish with fragrant rice and roasted vegetables. The day ends with comforting dinners, including crispy fried chicken, creamy mac and cheese, and vibrant fruit medleys. Each meal is crafted to deliver the perfect balance of nutrition, taste, and satisfaction, making every bite a delightful experience."
+			},
+			"metadata": null,
+			"extradata": null,
+			"created_at": "2025-02-06T07:51:28.512Z",
+			"updated_at": "2025-02-06T07:51:28.585Z",
+			"account_id": "05b632ef-5463-41e1-8318-478165ed4b72",
+			"tags": [],
+			"subscription_plan_id": "9ee9cb43-313d-42c3-90eb-0d3846af493d",
+			"owner_type": null,
+			"owner_id": null,
+			"collections": [],
+			"category_path": "Plans",
+			"category_id": "1bf44437-e6f3-453b-83ca-2c72d0a553ea",
+			"variants": [
+				{
+					"id": "ad1cd786-2059-483c-b064-b515749580d3",
+					"product_id": "f45b8ff3-f6d3-4b0c-be0c-c4a5781a7871",
+					"position": 0,
+					"sku": "subscription-plan-signature-meals",
+					"name": "Default Variant",
+					"status": "active",
+					"attribute_values": null,
+					"price_units": null,
+					"list_price_units": null,
+					"is_default": true,
+					"is_backorderable": false,
+					"properties": null,
+					"metadata": null,
+					"extradata": null,
+					"created_at": "2025-02-06T07:51:28.543Z",
+					"updated_at": "2025-02-06T07:51:28.569Z",
+					"account_id": "05b632ef-5463-41e1-8318-478165ed4b72",
+					"tax_number": null,
+					"store_tax_code_id": null,
+					"description": null,
+					"gtin_code": null,
+					"availability_start": null,
+					"availability_end": null,
+					"selling_status": null,
+					"owner_type": null,
+					"owner_id": null,
+					"managed_by_staff_id": null,
+					"media": [
+						{
+							"id": "2c774199-1527-4bc8-a8b1-e0f047159f30",
+							"kind": "primary",
+							"created_at": "2025-02-06T07:51:28.654Z",
+							"updated_at": "2025-02-06T07:51:38.861Z",
+							"url": "https://local-s3-assets.apexcommerce.com/cdn-cgi/image/f=jpeg,quality=90/meals-demo-data/Demo Images and Info/1. Signature Meals/Signature Meal Plan.jpg",
+							"label": null,
+							"position": null,
+							"caption": null,
+							"alt_text": null,
+							"custom_css": null,
+							"file": {
+								"key": "zf868/xy0jtbrfk93ugp9bnod2wia98r1x"
+							}
+						}
+					],
+					"property_sets": []
+				}
+			],
+			"property_sets": []
+		}
+	},
+	{
+		"id": "8b0d0628-944f-4981-b834-fdb7c7ec0d57",
+		"name": "Indulge Meals",
+		"frequency": 1,
+		"interval": "day",
+		"deliveries_per_interval": 3,
+		"account_id": "05b632ef-5463-41e1-8318-478165ed4b72",
+		"created_at": "2025-02-06T07:51:28.917Z",
+		"updated_at": "2025-02-06T07:51:30.562Z",
+		"trial_available": true,
+		"trial_duration_frequency": 3,
+		"trial_duration_interval": "day",
+		"durations": [
+			{
+				"interval": "week",
+				"frequency": 1
+			},
+			{
+				"interval": "week",
+				"frequency": 2
+			},
+			{
+				"interval": "month",
+				"frequency": 1
+			},
+			{
+				"interval": "month",
+				"frequency": 2
+			},
+			{
+				"interval": "month",
+				"frequency": 3
+			}
+		],
+		"trial_coupon_campaign_id": "340b8a6d-9076-4816-94b5-59f926741014",
+		"can_select_day_pattern": true,
+		"product": {
+			"id": "e5d33eb2-739e-4fce-a016-2c1051b05f83",
+			"name": "Subscription Plan - Indulge Meals",
+			"slug": "subscription-plan-indulge-meals",
+			"status": "draft",
+			"kind": "basic",
+			"variant_attributes": null,
+			"content": {
+				"summary": "A thoughtfully curated daily menu featuring three distinct meals that combine classic comfort with modern, nutritious ingredients. From a hearty traditional breakfast to a fresh and vibrant lunch, concluding with an elegant dinner, each dish is crafted to provide both satisfaction and nourishment throughout your day.",
+				"description": "The Indulge Meal Plan transforms your daily dining experience with three carefully designed meals. Begin your morning with the Indulge Breakfast, a classic English breakfast featuring crispy bacon, fried eggs, and all the traditional accompaniments. For lunch, enjoy a nutritious bowl combining grilled chicken, fresh coleslaw, creamy avocado, and zesty pico de gallo. End your day with the sophisticated Indulge Dinner, featuring a perfectly grilled pork chop paired with sweet peaches and peppery arugula. Each meal is thoughtfully balanced to provide both indulgence and nutrition, ensuring a satisfying culinary experience from morning to night."
+			},
+			"metadata": null,
+			"extradata": null,
+			"created_at": "2025-02-06T07:51:28.930Z",
+			"updated_at": "2025-02-06T07:51:28.976Z",
+			"account_id": "05b632ef-5463-41e1-8318-478165ed4b72",
+			"tags": [],
+			"subscription_plan_id": "8b0d0628-944f-4981-b834-fdb7c7ec0d57",
+			"owner_type": null,
+			"owner_id": null,
+			"collections": [],
+			"category_path": "Plans",
+			"category_id": "1bf44437-e6f3-453b-83ca-2c72d0a553ea",
+			"variants": [
+				{
+					"id": "fa1a3123-23af-4c8a-8045-602e3d5cb104",
+					"product_id": "e5d33eb2-739e-4fce-a016-2c1051b05f83",
+					"position": 0,
+					"sku": "subscription-plan-indulge-meals",
+					"name": "Default Variant",
+					"status": "active",
+					"attribute_values": null,
+					"price_units": null,
+					"list_price_units": null,
+					"is_default": true,
+					"is_backorderable": false,
+					"properties": null,
+					"metadata": null,
+					"extradata": null,
+					"created_at": "2025-02-06T07:51:28.947Z",
+					"updated_at": "2025-02-06T07:51:28.961Z",
+					"account_id": "05b632ef-5463-41e1-8318-478165ed4b72",
+					"tax_number": null,
+					"store_tax_code_id": null,
+					"description": null,
+					"gtin_code": null,
+					"availability_start": null,
+					"availability_end": null,
+					"selling_status": null,
+					"owner_type": null,
+					"owner_id": null,
+					"managed_by_staff_id": null,
+					"media": [
+						{
+							"id": "3cabe2f9-ae2b-490d-9ab7-683f912ca9b9",
+							"kind": "primary",
+							"created_at": "2025-02-06T07:51:29.063Z",
+							"updated_at": "2025-02-06T07:51:40.161Z",
+							"url": "https://local-s3-assets.apexcommerce.com/cdn-cgi/image/f=jpeg,quality=90/meals-demo-data/Demo Images and Info/2. Indulge Meals/Indulge Plan.webp",
+							"label": null,
+							"position": null,
+							"caption": null,
+							"alt_text": null,
+							"custom_css": null,
+							"file": {
+								"key": "zf868/jblwe7i3b0x7jlt9hee8ebuywcgp"
+							}
+						}
+					],
+					"property_sets": []
+				}
+			],
+			"property_sets": []
+		}
+	},
+	{
+		"id": "bfec62d1-ab20-44fd-88eb-38717340318a",
+		"name": "Custom Plan",
+		"frequency": 1,
+		"interval": "day",
+		"deliveries_per_interval": 3,
+		"account_id": "05b632ef-5463-41e1-8318-478165ed4b72",
+		"created_at": "2025-02-06T07:51:29.311Z",
+		"updated_at": "2025-02-06T07:51:31.048Z",
+		"trial_available": true,
+		"trial_duration_frequency": 3,
+		"trial_duration_interval": "day",
+		"durations": [
+			{
+				"interval": "week",
+				"frequency": 1
+			},
+			{
+				"interval": "week",
+				"frequency": 2
+			},
+			{
+				"interval": "month",
+				"frequency": 1
+			},
+			{
+				"interval": "month",
+				"frequency": 2
+			},
+			{
+				"interval": "month",
+				"frequency": 3
+			}
+		],
+		"trial_coupon_campaign_id": "340b8a6d-9076-4816-94b5-59f926741014",
+		"can_select_day_pattern": true,
+		"product": {
+			"id": "0b7052fe-cddb-47a9-96bf-5822a500096b",
+			"name": "Subscription Plan - Custom Plan",
+			"slug": "subscription-plan-custom-plan",
+			"status": "draft",
+			"kind": "basic",
+			"variant_attributes": null,
+			"content": {
+				"summary": "A meal subscription plan offering personalized meal options tailored to individual dietary preferences and needs. Subscribers can choose from a variety of meal types, ingredients, and portion sizes, ensuring each meal fits their lifestyle and taste.",
+				"description": "The Custom Meal Plan empowers you to create your ideal dining experience across breakfast, lunch, and dinner. Choose from our range of high-quality proteins, fresh produce, and wholesome ingredients, or swap ingredients based on your allergies or dislikes to build meals that perfectly match your dietary preferences and nutritional goals. With our Customized Plan, you're in complete control of your healthy eating journey."
+			},
+			"metadata": null,
+			"extradata": null,
+			"created_at": "2025-02-06T07:51:29.328Z",
+			"updated_at": "2025-02-06T07:51:29.375Z",
+			"account_id": "05b632ef-5463-41e1-8318-478165ed4b72",
+			"tags": [],
+			"subscription_plan_id": "bfec62d1-ab20-44fd-88eb-38717340318a",
+			"owner_type": null,
+			"owner_id": null,
+			"collections": [],
+			"category_path": "Plans",
+			"category_id": "1bf44437-e6f3-453b-83ca-2c72d0a553ea",
+			"variants": [
+				{
+					"id": "ea63589c-8c92-431e-ae53-44cd72bba86e",
+					"product_id": "0b7052fe-cddb-47a9-96bf-5822a500096b",
+					"position": 0,
+					"sku": "subscription-plan-custom-plan",
+					"name": "Default Variant",
+					"status": "active",
+					"attribute_values": null,
+					"price_units": null,
+					"list_price_units": null,
+					"is_default": true,
+					"is_backorderable": false,
+					"properties": null,
+					"metadata": null,
+					"extradata": null,
+					"created_at": "2025-02-06T07:51:29.346Z",
+					"updated_at": "2025-02-06T07:51:29.366Z",
+					"account_id": "05b632ef-5463-41e1-8318-478165ed4b72",
+					"tax_number": null,
+					"store_tax_code_id": null,
+					"description": null,
+					"gtin_code": null,
+					"availability_start": null,
+					"availability_end": null,
+					"selling_status": null,
+					"owner_type": null,
+					"owner_id": null,
+					"managed_by_staff_id": null,
+					"media": [
+						{
+							"id": "150fdbe2-e7c1-43d7-ab81-e245d5d1862a",
+							"kind": "primary",
+							"created_at": "2025-02-06T07:51:29.480Z",
+							"updated_at": "2025-02-06T07:51:41.753Z",
+							"url": "https://local-s3-assets.apexcommerce.com/cdn-cgi/image/f=jpeg,quality=90/meals-demo-data/Demo Images and Info/4. Custom Plan/Custom Meals.jpg",
+							"label": null,
+							"position": null,
+							"caption": null,
+							"alt_text": null,
+							"custom_css": null,
+							"file": {
+								"key": "zf868/4saq67u40wzvbvu6t3a4xkon5vtw"
+							}
+						}
+					],
+					"property_sets": []
+				}
+			],
+			"property_sets": [
+				{
+					"id": "23c86deb-b6ce-4199-8156-16a940e838bb",
+					"is_template": false,
+					"status": "active",
+					"name": "Addons - Allergies",
+					"description": null,
+					"kind": "list",
+					"info": [
+						{
+							"kind": "text",
+							"value": "allergies",
+							"position": 0
+						}
+					],
+					"media": []
+				}
+			]
+		}
+	},
+	{
+		"id": "5b667be7-5f79-4394-9bf3-bca07f1642da",
+		"name": "Salad Lunch Plan",
+		"frequency": 1,
+		"interval": "day",
+		"deliveries_per_interval": 1,
+		"account_id": "05b632ef-5463-41e1-8318-478165ed4b72",
+		"created_at": "2025-02-06T07:51:29.825Z",
+		"updated_at": "2025-02-06T07:51:30.585Z",
+		"trial_available": true,
+		"trial_duration_frequency": 3,
+		"trial_duration_interval": "day",
+		"durations": [
+			{
+				"interval": "week",
+				"frequency": 1
+			},
+			{
+				"interval": "week", 
+				"frequency": 2
+			},
+			{
+				"interval": "month",
+				"frequency": 1
+			},
+			{
+				"interval": "month",
+				"frequency": 2
+			},
+			{
+				"interval": "month",
+				"frequency": 3
+			}
+		],
+		"trial_coupon_campaign_id": "340b8a6d-9076-4816-94b5-59f926741014",
+		"can_select_day_pattern": true,
+		"product": {
+			"id": "0d1582ba-4252-45ba-ae25-aeface64c16b",
+			"name": "Subscription Plan - Salad Lunch Plan",
+			"slug": "subscription-plan-salad-lunch-plan",
+			"status": "draft",
+			"kind": "basic",
+			"variant_attributes": null,
+			"content": {
+				"summary": "A grilled chicken breast served over brown rice with edamame, radishes, and fresh arugula, garnished with fresh herbs and accompanied by a lime wedge for a light yet satisfying midday meal.",
+				"description": "Combines perfectly sliced grilled chicken breast with a vibrant mix of colorful ingredients. The bed of nutty brown rice is topped with bright green edamame beans, crisp radish slices, and peppery arugula. Fresh herbs add an aromatic touch, while a lime wedge on the side allows for a customizable citrus kick. This thoughtfully composed dish offers a perfect balance of lean protein, whole grains, and fresh vegetables, making it an ideal choice for a nutritious and filling lunch."
+			},
+			"metadata": null,
+			"extradata": null,
+			"created_at": "2025-02-06T07:51:29.870Z",
+			"updated_at": "2025-02-06T07:51:29.923Z",
+			"account_id": "05b632ef-5463-41e1-8318-478165ed4b72",
+			"tags": [],
+			"subscription_plan_id": "5b667be7-5f79-4394-9bf3-bca07f1642da",
+			"owner_type": null,
+			"owner_id": null,
+			"collections": [],
+			"category_path": "Plans",
+			"category_id": "1bf44437-e6f3-453b-83ca-2c72d0a553ea",
+			"variants": [
+				{
+					"id": "fc077ce6-a205-4736-8c4a-62a30d88e0d9",
+					"product_id": "0d1582ba-4252-45ba-ae25-aeface64c16b",
+					"position": 0,
+					"sku": "subscription-plan-salad-lunch-plan",
+					"name": "Default Variant",
+					"status": "active",
+					"attribute_values": null,
+					"price_units": null,
+					"list_price_units": null,
+					"is_default": true,
+					"is_backorderable": false,
+					"properties": null,
+					"metadata": null,
+					"extradata": null,
+					"created_at": "2025-02-06T07:51:29.893Z",
+					"updated_at": "2025-02-06T07:51:29.905Z",
+					"account_id": "05b632ef-5463-41e1-8318-478165ed4b72",
+					"tax_number": null,
+					"store_tax_code_id": null,
+					"description": null,
+					"gtin_code": null,
+					"availability_start": null,
+					"availability_end": null,
+					"selling_status": null,
+					"owner_type": null,
+					"owner_id": null,
+					"managed_by_staff_id": null,
+					"media": [
+						{
+							"id": "268b9ded-e81f-4635-9d16-3299b4e0aec0",
+							"kind": "primary",
+							"created_at": "2025-02-06T07:51:29.960Z",
+							"updated_at": "2025-02-06T07:51:42.721Z",
+							"url": "https://local-s3-assets.apexcommerce.com/cdn-cgi/image/f=jpeg,quality=90/meals-demo-data/Demo Images and Info/3. Salad Lunch Plan/Salad Lunch Plan.jpg",
+							"label": null,
+							"position": null,
+							"caption": null,
+							"alt_text": null,
+							"custom_css": null,
+							"file": {
+								"key": "zf868/idqfc1aqq7smyhpsl5e4ggddvust"
+							}
+						}
+					],
+					"property_sets": []
+				}
+			],
+			"property_sets": []
+		}
+	}
+]
