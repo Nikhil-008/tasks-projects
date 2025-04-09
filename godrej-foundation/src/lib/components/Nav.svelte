@@ -34,8 +34,7 @@
 				{#if isMobileMenuOpen}
 					<div class="nav-menu-container">
 						<div class="flex flex-col space-y-4">
-							<a href="/" class="nav-link">Home</a>
-							<a href="/signature-meal-plan" class="nav-link">signature-meal-plan</a>
+							<a href="/home" class="nav-link">home</a>
 							<a href="/services" class="nav-link">Services</a>
 						</div>
 					</div>
@@ -56,8 +55,8 @@
 		{#if isMobileMenuOpen}
 			<div class="nav-menu-container">
 				<div class="flex flex-col items-center space-y-4">
-					<a href="/" class="nav-link">Home</a>
-					<a href="/signature-meal-plan" class="nav-link">signature-meal-plan</a>
+					<!-- <a href="/" class="nav-link">Home</a> -->
+					<a href="/home" class="nav-link">home</a>
 					<a href="/services" class="nav-link">Services</a>
 				</div>
 			</div>

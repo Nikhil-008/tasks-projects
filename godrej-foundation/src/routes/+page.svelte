@@ -1,10 +1,19 @@
 <script lang="ts">
-  import MealCard from '$lib/components/MealCard.svelte';
-  import plans from '$lib/data/subscription-data.json';
+	import Nav from '$lib/components/Nav.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+	import StoryHeader from '$lib/components/StoryHeader.svelte';
+	import StoryHero from '$lib/components/StoryHero.svelte';
+	import StoryContent from '$lib/components/StoryContent.svelte';
+	import RelatedStories from '$lib/components/RelatedStories.svelte';
+	import CollaborateSection from '$lib/components/CollaborateSection.svelte';
 </script>
 
-<main class="max-w-6xl mx-auto p-6 mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-  {#each plans as plan}
-    <MealCard {plan} />
-  {/each}
+<main>
+	<Nav />
+	<StoryHeader />
+	<StoryHero />
+	<StoryContent />
+	<RelatedStories />
+	<CollaborateSection />
+	<Footer />
 </main>
