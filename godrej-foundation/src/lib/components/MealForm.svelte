@@ -1,10 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  export let plan: any; // Pass the plan object
+  import { goto } from '$app/navigation'; // Import goto for navigation
+  import PlanModal from './PlanModal.svelte';
+  export let plan: any;
 
   let selectedDeliveryDays = '';
   const allDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
   let selectedDays: string[] = [];
+  let showAddonModal = false;
 
   function handleDeliveryDaysChange(value: string) {
     selectedDeliveryDays = value;
@@ -30,7 +33,7 @@
       selectedDeliveryDays = 'weekdays';
     } else if (selectedDays.length === 7 && allDays.every(day => selectedDays.includes(day))) {
       selectedDeliveryDays = 'everyday';
-    } else if (selectedDeliveryDays !== 'custom') {
+    } else if (selectedDays !== 'custom' && selectedDays.length > 0) {
       selectedDeliveryDays = 'custom';
     }
   }
@@ -53,7 +56,29 @@
 
     localStorage.setItem(`${plan.product.slug}-form`, JSON.stringify(data));
     console.log('Saved:', data);
-    // Optionally redirect: window.location.href = `/apex/plans/${plan.id}/purchase`;
+    showAddonModal = true; // Show addon modal after form submission
+  }
+
+  function handleModalClose() {
+    showAddonModal = false;
+  }
+
+  function handleModalConfirm(event: CustomEvent) {
+    const selectedAddons = event.detail.selectedAddons;
+    console.log('Selected addons:', selectedAddons);
+    showAddonModal = false;
+    // Navigate to checkout page
+    const formData = JSON.parse(localStorage.getItem(`${plan.product.slug}-form`) || '{}');
+    localStorage.setItem('checkoutData', JSON.stringify({ ...formData, selectedAddons }));
+    goto('/checkout');
+  }
+
+  function handleModalSkip() {
+    showAddonModal = false;
+    // Navigate to checkout page without addons
+    const formData = JSON.parse(localStorage.getItem(`${plan.product.slug}-form`) || '{}');
+    localStorage.setItem('checkoutData', JSON.stringify(formData));
+    goto('/checkout');
   }
 
   onMount(() => {
@@ -89,13 +114,16 @@
     const price = d.interval === 'week' ? 600 - d.frequency * 55 : 500 - d.frequency * 50; // Placeholder logic
     return `${d.frequency} ${d.interval}${d.frequency > 1 ? 's' : ''} - ₹${price} per meal`;
   });
+
+  // Get available slots from plan.slots
+  $: availableSlots = plan.slots.map(slot => slot.name);
 </script>
 
 <form id="mealPlanForm" class="space-y-6 max-w-[420px]" on:submit={handleSubmit} novalidate>
   <fieldset class="space-y-4">
     <legend class="text-base font-normal text-[#26332F]">Choose Your Delivery Slot:</legend>
-    <div class="flex justify-between">
-      {#each ['breakfast', 'lunch', 'dinner'] as slot}
+    <div class="flex justify-start gap-4 md:gap-8">
+      {#each availableSlots as slot}
         <label for="slot-{slot}" class="flex items-center justify-center px-4 py-2 border border-[#B5C4C0] rounded-[8px] cursor-pointer gap-2 has-[:checked]:bg-[#22504314] has-[:checked]:border-[#225043]">
           <input
             type="checkbox"
@@ -167,3 +195,12 @@
     <button type="submit" class="px-7 md:px-15 py-3 bg-[#225043] text-white font-medium rounded-full hover:bg-[#225043]/90">Subscribe Now</button>
   </div>
 </form>
+
+{#if showAddonModal}
+  <PlanModal
+    {plan}
+    on:close={handleModalClose}
+    on:confirm={handleModalConfirm}
+    on:skip={handleModalSkip}
+  />
+{/if}

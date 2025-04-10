@@ -13,6 +13,15 @@ export interface SubscriptionPlan {
   durations: { interval: string; frequency: number }[];
   trial_coupon_campaign_id: string;
   can_select_day_pattern: boolean;
+  slots: {
+    name: string;
+    addons: {
+      id: string;
+      name: string;
+      type: string;
+      price: number;
+    }[];
+  }[];
   product: {
     id: string;
     name: string;
