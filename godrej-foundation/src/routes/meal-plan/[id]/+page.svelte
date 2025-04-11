@@ -1,13 +1,26 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import MealForm from '$lib/components/MealForm.svelte';
-  import plans from '$lib/data/subscription-data.json';
-  export let data: { id: string };
+  
+  export let data;
+  const { plan } = data;
 
-  const plan = plans.find(p => p.product.slug === data.id);
+  function goBack() {
+    goto('/home');
+  }
 </script>
 
 <main>
+  <button 
+    on:click={goBack} 
+    class="flex items-center text-[#225043] mb-4 ml-6 mt-6"
+  >
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15 18L9 12L15 6" stroke="#225043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="ml-2 text-base font-normal">Back</span>
+  </button>
+
   {#if plan}
     <div class="flex flex-col lg:flex-row items-center max-w-6xl mx-auto p-6 mt-10">
       <!-- Left Section -->
