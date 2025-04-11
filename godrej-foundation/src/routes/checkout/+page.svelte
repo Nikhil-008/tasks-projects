@@ -1,6 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import { browser } from '$app/environment';
+  import planData from '$lib/data/subscription-data.json';
+  import ChevronDown from '$lib/components/icons/ChevronDown.svelte';
 
   let checkoutData: {
     planId: string;
@@ -12,7 +15,7 @@
 
   let plan: any = null;
 
-  let selectedAddress = null;
+  let selectedAddress: { id: any; name?: string; address?: string; phone?: string; email?: string; } | null = null;
   let addresses = [
     {
       id: 1,
@@ -29,6 +32,10 @@
       email: 'aditya@able.do'
     }
   ];
+
+  let walletBalance = 500.00;
+  let costPerMeal = 85.00;
+  let deliveryCostPerMeal = 0.00;
 
   // Get next available start date (next day)
   const getNextStartDate = () => {
@@ -49,60 +56,102 @@
   const startDateOption = getNextStartDate();
   let startDate = startDateOption.value;
 
-  onMount(async () => {
+  let isWalletBalanceUsed = false;
+  let isProcessingPayment = false;
+  let paymentError = '';
+
+  let formattedDays = '';
+  let formattedSlots = '';
+  let addonTotal = 0;
+  let totalMeals = 0;
+
+  onMount(() => {
     const savedData = localStorage.getItem('checkoutData');
-    if (savedData) {
-      checkoutData = JSON.parse(savedData);
-      const response = await import('$lib/data/subscription-data.json');
-      const plans = response.default;
-      plan = plans.find(p => p.id === checkoutData?.planId);
-      
-      if (!plan) {
-        // If plan is not found, redirect to home
-        goto('/');
-      }
-    } else {
+    if (!savedData) {
       // If no checkout data, redirect to home
-      goto('/');
+      goto('/home');
+      return;
+    }
+
+    checkoutData = JSON.parse(savedData);
+    plan = planData.find(p => p.id === checkoutData?.planId);
+    
+    if (!plan) {
+      // If plan not found, redirect to home
+      goto('/home');
     }
   });
 
-  $: formattedDays = checkoutData?.selectedDays
-    ?.map(day => day.charAt(0).toUpperCase() + day.slice(1, 3))
-    .join('-');
-
-  $: addonTotal = checkoutData?.selectedAddons?.reduce((sum, addon) => sum + addon.price, 0) || 0;
-  $: basePrice = checkoutData?.deliveryDuration
-    ? parseInt(checkoutData.deliveryDuration.match(/₹(\d+)/)?.[1] || '0')
-    : 0;
-
-  $: formattedSlots = checkoutData?.deliverySlots
-    ?.map(slot => slot.charAt(0).toUpperCase() + slot.slice(1))
-    .join(', ');
-
-  let walletBalance = 500.00;
-  let costPerMeal = 85.00;
-  let deliveryCostPerMeal = 0.00;
-
-  $: totalMeals = checkoutData?.selectedDays?.length || 0;
-  $: totalAmount = (totalMeals * costPerMeal) + (totalMeals * deliveryCostPerMeal) + addonTotal;
-
-  function goBack() {
-    goto('/home'); // This will navigate back to home page
+  // Helper functions for formatting
+  function formatDays(days: string[] = []) {
+    return days.map(day => day.charAt(0).toUpperCase() + day.slice(1, 3)).join('-');
   }
 
-  function makePayment() {
-    console.log('Payment processed');
-    // Add payment logic here
+  function formatSlots(slots: string[] = []) {
+    return slots.map(slot => slot.charAt(0).toUpperCase() + slot.slice(1)).join(', ');
+  }
+
+  function calculateTotalAmount(meals: number, addons: number) {
+    const mealsTotal = meals * costPerMeal;
+    const deliveryTotal = meals * deliveryCostPerMeal;
+    return mealsTotal + deliveryTotal + addons;
+  }
+
+  // Consolidated reactive declarations
+  $: {
+    if (checkoutData) {
+      formattedDays = formatDays(checkoutData.selectedDays);
+      formattedSlots = formatSlots(checkoutData.deliverySlots);
+      addonTotal = checkoutData.selectedAddons?.reduce((sum, addon) => sum + addon.price, 0) || 0;
+      totalMeals = checkoutData.selectedDays?.length || 0;
+    }
+  }
+
+  $: totalAmount = calculateTotalAmount(totalMeals, addonTotal);
+  $: finalAmount = isWalletBalanceUsed ? Math.max(0, totalAmount - walletBalance) : totalAmount;
+
+  function goBack() {
+    if (browser && plan?.product?.slug) {
+      goto(`/meal-plan/${plan.product.slug}`);
+    } else {
+      goto('/home');
+    }
+  }
+
+  async function makePayment() {
+    if (!selectedAddress) {
+      alert('Please select a delivery address');
+      return;
+    }
+
+    try {
+      isProcessingPayment = true;
+      paymentError = '';
+
+      // Simulate payment processing
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // Clear storage only after successful payment
+      localStorage.removeItem('checkoutData');
+      localStorage.removeItem('checkoutFormData'); // Clean up any remaining temp data
+      
+      // Navigate to success page
+      goto('/');
+    } catch (error) {
+      console.error('Payment failed:', error);
+      paymentError = 'Payment failed. Please try again.';
+    } finally {
+      isProcessingPayment = false;
+    }
   }
 
   // Helper function to group addons by slot
-  function groupAddonsBySlot(addons, slots) {
-    const grouped = {};
+  function groupAddonsBySlot(addons: any[], slots: any[]) {
+    const grouped: { [key: string]: any[] } = {};
     
     slots.forEach(slot => {
       const slotAddons = addons.filter(addon => 
-        slot.addons.some(slotAddon => slotAddon.id === addon.id)
+        slot.addons.some((slotAddon: { id: any; }) => slotAddon.id === addon.id)
       );
       if (slotAddons.length > 0) {
         grouped[slot.name] = slotAddons;
@@ -112,7 +161,7 @@
     return grouped;
   }
 
-  $: groupedAddons = checkoutData?.selectedAddons 
+  $: groupedAddons = (checkoutData?.selectedAddons && plan?.slots) 
     ? groupAddonsBySlot(checkoutData.selectedAddons, plan.slots)
     : {};
 </script>
@@ -121,9 +170,7 @@
   <!-- Left Section -->
   <div class="w-full md:w-[58%]">
     <button on:click={goBack} class="flex items-center text-[#225043] mb-4">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M15 18L9 12L15 6" stroke="#225043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <ChevronDown size={24} direction="left" />
       <span class="ml-2 text-base font-normal">Back</span>
     </button>
   
@@ -175,9 +222,7 @@
           <div class="flex justify-between items-center">
             <span class="text-sm font-medium text-[#26332F]">Meal Plan</span>
             <button class="text-[#225043] text-sm">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 6L8 10L4 6" stroke="#225043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <ChevronDown size={16} />
             </button>
           </div>
           <p class="text-sm text-[#26332F]">{plan.name}</p>
@@ -188,9 +233,7 @@
           <div class="flex justify-between items-center">
             <span class="text-sm font-medium text-[#26332F]">Meals</span>
             <button class="text-[#225043] text-sm">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 6L8 10L4 6" stroke="#225043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <ChevronDown size={16} />
             </button>
           </div>
           <p class="text-sm text-[#26332F]">{formattedSlots}</p>
@@ -200,9 +243,7 @@
           <div class="flex justify-between items-center">
             <span class="text-sm font-medium text-[#26332F]">Delivery Days</span>
             <button class="text-[#225043] text-sm">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 6L8 10L4 6" stroke="#225043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <ChevronDown size={16} />
             </button>
           </div>
           <p class="text-sm text-[#26332F]">{formattedDays}</p>
@@ -212,9 +253,7 @@
           <div class="flex justify-between items-center">
             <span class="text-sm font-medium text-[#26332F]">Subscription Duration</span>
             <button class="text-[#225043] text-sm">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 6L8 10L4 6" stroke="#225043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <ChevronDown size={16} />
             </button>
           </div>
           <p class="text-sm text-[#26332F]">{checkoutData.deliveryDuration.split('-')[0].trim()}</p>
@@ -226,9 +265,7 @@
             <div class="flex justify-between items-center">
               <span class="text-sm font-medium text-[#26332F]">Add-ons</span>
               <button class="text-[#225043] text-sm">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 6L8 10L4 6" stroke="#225043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                <ChevronDown size={16} />
               </button>
             </div>
             <div class="space-y-4 mt-2">
@@ -261,15 +298,41 @@
             <span class="text-sm text-[#26332F]">Total :</span>
             <span class="text-sm text-[#26332F]">₹{totalAmount.toFixed(2)}</span>
           </div>
+          {#if isWalletBalanceUsed}
+            <div class="flex justify-between text-sm text-[#26332F]">
+              <span>Wallet balance applied:</span>
+              <span>-₹{Math.min(walletBalance, totalAmount).toFixed(2)}</span>
+            </div>
+          {/if}
+          <div class="flex justify-between font-semibold mt-2">
+            <span class="text-sm text-[#26332F]">Final Amount:</span>
+            <span class="text-sm text-[#26332F]">₹{finalAmount.toFixed(2)}</span>
+          </div>
         </div>
 
         <label class="flex items-center gap-2">
-          <input type="checkbox" class="w-4 h-4 text-[#225043] border-[#B5C4C0] rounded focus:ring-[#225043]" />
+          <input 
+            type="checkbox" 
+            bind:checked={isWalletBalanceUsed}
+            class="w-4 h-4 text-[#225043] border-[#B5C4C0] rounded focus:ring-[#225043]" 
+          />
           <span class="text-sm text-[#26332F]">Use available wallet balance ₹{walletBalance}</span>
         </label>
 
-        <button on:click={makePayment} class="w-full bg-[#1A3C2E] text-white px-4 py-2 rounded-[8px] text-sm font-medium hover:bg-[#1A3C2E]/90">
-          Make Payment <span>→</span>
+        {#if paymentError}
+          <p class="text-red-500 text-sm">{paymentError}</p>
+        {/if}
+
+        <button 
+          on:click={makePayment} 
+          class="w-full bg-[#1A3C2E] text-white px-4 py-2 rounded-[8px] text-sm font-medium hover:bg-[#1A3C2E]/90 disabled:opacity-50"
+          disabled={isProcessingPayment}
+        >
+          {#if isProcessingPayment}
+            Processing...
+          {:else}
+            Make Payment <span>→</span>
+          {/if}
         </button>
       </div>
     </div>

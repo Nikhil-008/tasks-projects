@@ -1,35 +1,83 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import type { SubscriptionPlan } from '$lib/types';
   
-  export let plan: SubscriptionPlan;
+  // Props
+  export let plan: any;
+
+  // Event dispatcher
   const dispatch = createEventDispatcher();
 
+  // State
   let selectedAddons: string[] = [];
+  let selectedSlots = new Set<string>();
 
+  // Computed values
+  $: totalAddonPrice = calculateTotalAddonPrice(selectedAddons);
+
+  // Helper functions
+  function calculateTotalAddonPrice(addonIds: string[]): number {
+    return addonIds.reduce((total, addonId) => {
+      const addon = plan.slots.flatMap((s: { addons: any; }) => s.addons).find((a: { id: string; }) => a.id === addonId);
+      return total + (addon?.price || 0);
+    }, 0);
+  }
+
+  // Slot management
+  function toggleSlot(slotName: string) {
+    if (selectedSlots.has(slotName)) {
+      deselectSlot(slotName);
+    } else {
+      selectSlot(slotName);
+    }
+  }
+
+  function selectSlot(slotName: string) {
+    selectedSlots.add(slotName);
+    selectedSlots = selectedSlots; // Trigger reactivity
+  }
+
+  function deselectSlot(slotName: string) {
+    selectedSlots.delete(slotName);
+    // Remove all addons from this slot
+    const slotAddons = plan.slots.find((s: { name: string; }) => s.name === slotName)?.addons || [];
+    selectedAddons = selectedAddons.filter(id => 
+      !slotAddons.some((a: { id: string; }) => a.id === id)
+    );
+  }
+
+  // Event handlers
   function close() {
     dispatch('close');
   }
 
   function handleConfirm() {
     // Get the full addon objects for selected IDs
-    const selectedAddonObjects = plan.slots.flatMap(slot => 
-      slot.addons.filter(addon => selectedAddons.includes(addon.id))
+    const selectedAddonObjects = plan.slots.flatMap((slot: { addons: any[]; }) => 
+      slot.addons.filter((addon: { id: string; }) => selectedAddons.includes(addon.id))
     );
-
-    // Save selected addons to localStorage
-    localStorage.setItem(`${plan.product.slug}-addons`, JSON.stringify(selectedAddonObjects));
     
     dispatch('confirm', { selectedAddons: selectedAddonObjects });
   }
 
   function handleSkip() {
+    // Move temp data to checkout data without addons
+    const tempFormData = JSON.parse(localStorage.getItem('tempFormData') || '{}');
+    localStorage.setItem('checkoutData', JSON.stringify(tempFormData));
+    localStorage.removeItem('tempFormData');
+    
     dispatch('skip');
+  }
+
+  // Helper functions
+  function getSelectedAddonObjects() {
+    return plan.slots.flatMap((slot: { addons: any[]; }) => 
+      slot.addons.filter((addon: { id: string; }) => selectedAddons.includes(addon.id))
+    );
   }
 </script>
 
 <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-  <div class="bg-white rounded-2xl w-full max-w-[500px] p-6 relative">
+  <div class="bg-white rounded-2xl w-full max-w-[500px] p-6 relative max-h-[90vh] overflow-y-auto">
     <!-- Close button -->
     <button
       on:click={close}
@@ -42,8 +90,16 @@
 
     <div class="space-y-6">
       {#each plan.slots as slot}
-        <div class="space-y-4">
-          <h3 class="text-lg font-medium text-[#26332F] capitalize">{slot.name}</h3>
+        <div class="space-y-4 p-4 bg-[#F5F7F6] rounded-lg">
+          <div class="flex justify-between items-center">
+            <h3 class="text-lg font-medium text-[#26332F] capitalize">{slot.name}</h3>
+            <button 
+              class="text-sm text-[#225043]"
+              on:click={() => toggleSlot(slot.name)}
+            >
+              {selectedSlots.has(slot.name) ? 'Deselect All' : 'Select All'}
+            </button>
+          </div>
           <div class="flex flex-wrap gap-3">
             {#each slot.addons as addon}
               <label 
@@ -64,6 +120,10 @@
           </div>
         </div>
       {/each}
+    </div>
+
+    <div class="mt-4 border-t border-[#B5C4C0] pt-4">
+      <p class="text-sm text-[#26332F]">Total Add-ons: ₹{totalAddonPrice}</p>
     </div>
 
     <div class="flex justify-end gap-4 mt-8">

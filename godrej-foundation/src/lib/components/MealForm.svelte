@@ -1,22 +1,50 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { goto } from '$app/navigation'; // Import goto for navigation
+  import { goto } from '$app/navigation';
   import PlanModal from './PlanModal.svelte';
+
+  // Props
   export let plan: any;
 
+  // Form state
   let selectedDeliveryDays = '';
-  const allDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
   let selectedDays: string[] = [];
   let showAddonModal = false;
 
+  // Constants
+  const allDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+  // Form validation state
+  let formErrors = {
+    deliverySlots: '',
+    selectedDays: '',
+    deliveryDuration: ''
+  };
+
+  // Computed values
+  $: availableSlots = plan.slots.map((slot: { name: any; }) => slot.name);
+  $: durations = calculateDurations(plan.durations);
+
+  // Helper functions
+  function calculateDurations(planDurations: any[]) {
+    return planDurations.map((d: { interval: string; frequency: number; }) => {
+      const price = d.interval === 'week' ? 600 - d.frequency * 55 : 500 - d.frequency * 50;
+      return `${d.frequency} ${d.interval}${d.frequency > 1 ? 's' : ''} - ₹${price} per meal`;
+    });
+  }
+
+  // Form handling functions
   function handleDeliveryDaysChange(value: string) {
     selectedDeliveryDays = value;
-    if (value === 'weekdays') {
-      selectedDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
-    } else if (value === 'everyday') {
-      selectedDays = [...allDays];
-    } else if (value === 'custom') {
-      selectedDays = [];
+    selectedDays = getSelectedDaysForOption(value);
+  }
+
+  function getSelectedDaysForOption(option: string): string[] {
+    switch (option) {
+      case 'weekdays': return allDays.slice(0, 5);
+      case 'everyday': return [...allDays];
+      case 'custom': return [];
+      default: return [];
     }
   }
 
@@ -33,9 +61,34 @@
       selectedDeliveryDays = 'weekdays';
     } else if (selectedDays.length === 7 && allDays.every(day => selectedDays.includes(day))) {
       selectedDeliveryDays = 'everyday';
-    } else if (selectedDays !== 'custom' && selectedDays.length > 0) {
+    } else if (selectedDeliveryDays !== 'custom' && selectedDays.length > 0) {
       selectedDeliveryDays = 'custom';
     }
+  }
+
+  function validateForm(formData: FormData) {
+    const errors = { ...formErrors };
+    let isValid = true;
+
+    const slots = formData.getAll('deliverySlot');
+    if (slots.length === 0) {
+      errors.deliverySlots = 'Please select at least one delivery slot';
+      isValid = false;
+    }
+
+    if (selectedDays.length === 0) {
+      errors.selectedDays = 'Please select delivery days';
+      isValid = false;
+    }
+
+    const duration = formData.get('deliveryDuration');
+    if (!duration) {
+      errors.deliveryDuration = 'Please select a delivery duration';
+      isValid = false;
+    }
+
+    formErrors = errors;
+    return isValid;
   }
 
   function handleSubmit(e: Event) {
@@ -43,80 +96,106 @@
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
 
-    const deliverySlots = formData.getAll('deliverySlot') as string[];
-    const deliveryDuration = formData.get('deliveryDuration') as string;
+    if (!validateForm(formData)) {
+      return;
+    }
 
     const data = {
-      deliverySlots,
+      planId: plan.id,
+      deliverySlots: formData.getAll('deliverySlot') as string[],
       deliveryDays: selectedDeliveryDays,
       selectedDays,
-      deliveryDuration,
-      planId: plan.id
+      deliveryDuration: formData.get('deliveryDuration') as string
     };
 
-    localStorage.setItem(`${plan.product.slug}-form`, JSON.stringify(data));
-    console.log('Saved:', data);
-    showAddonModal = true; // Show addon modal after form submission
+    localStorage.setItem('checkoutFormData', JSON.stringify(data));
+    showAddonModal = true;
   }
 
+  // Modal handling functions
   function handleModalClose() {
     showAddonModal = false;
   }
 
   function handleModalConfirm(event: CustomEvent) {
-    const selectedAddons = event.detail.selectedAddons;
-    console.log('Selected addons:', selectedAddons);
-    showAddonModal = false;
-    // Navigate to checkout page
-    const formData = JSON.parse(localStorage.getItem(`${plan.product.slug}-form`) || '{}');
-    localStorage.setItem('checkoutData', JSON.stringify({ ...formData, selectedAddons }));
+    const formData = JSON.parse(localStorage.getItem('checkoutFormData') || '{}');
+    const checkoutData = {
+      ...formData,
+      selectedAddons: event.detail.selectedAddons
+    };
+
+    localStorage.setItem('checkoutData', JSON.stringify(checkoutData));
+    localStorage.removeItem('checkoutFormData');
     goto('/checkout');
   }
 
   function handleModalSkip() {
-    showAddonModal = false;
-    // Navigate to checkout page without addons
-    const formData = JSON.parse(localStorage.getItem(`${plan.product.slug}-form`) || '{}');
+    const formData = JSON.parse(localStorage.getItem('checkoutFormData') || '{}');
     localStorage.setItem('checkoutData', JSON.stringify(formData));
+    localStorage.removeItem('checkoutFormData');
     goto('/checkout');
   }
 
+  // Lifecycle
   onMount(() => {
+    loadSavedFormData();
+  });
+
+  function loadSavedFormData() {
     try {
+      // First check for checkout data
+      const checkoutData = localStorage.getItem('checkoutData');
+      if (checkoutData) {
+        const parsedData = JSON.parse(checkoutData);
+        if (parsedData.planId === plan.id) {
+          restoreFormState(parsedData);
+          return;
+        }
+      }
+
+      // Fall back to plan-specific form data
       const savedData = localStorage.getItem(`${plan.product.slug}-form`);
-      if (!savedData) return;
-      
-      const parsedData = JSON.parse(savedData);
-      if (parsedData.deliverySlots) {
-        parsedData.deliverySlots.forEach((slot: string) => {
-          const checkbox = document.querySelector(`input[name="deliverySlot"][value="${slot}"]`) as HTMLInputElement | null;
-          if (checkbox) checkbox.checked = true;
-        });
-      }
-      if (parsedData.deliveryDays) {
-        selectedDeliveryDays = parsedData.deliveryDays;
-        handleDeliveryDaysChange(parsedData.deliveryDays);
-      }
-      if (parsedData.selectedDays) {
-        selectedDays = parsedData.selectedDays;
-      }
-      if (parsedData.deliveryDuration) {
-        const select = document.getElementById('deliveryDuration') as HTMLSelectElement | null;
-        if (select) select.value = parsedData.deliveryDuration;
+      if (savedData) {
+        const parsedData = JSON.parse(savedData);
+        restoreFormState(parsedData);
       }
     } catch (error) {
       console.error('Error loading saved form data:', error);
     }
-  });
+  }
 
-  // Dynamic durations from JSON (placeholder prices)
-  const durations = plan.durations.map(d => {
-    const price = d.interval === 'week' ? 600 - d.frequency * 55 : 500 - d.frequency * 50; // Placeholder logic
-    return `${d.frequency} ${d.interval}${d.frequency > 1 ? 's' : ''} - ₹${price} per meal`;
-  });
+  function restoreFormState(data: { deliverySlots: string[]; deliveryDays: string; selectedDays: string[]; deliveryDuration: string; }) {
+    // Restore delivery slots
+    if (data.deliverySlots) {
+      // Use setTimeout to ensure DOM is ready
+      setTimeout(() => {
+        data.deliverySlots.forEach((slot: string) => {
+          const checkbox = document.querySelector(`input[name="deliverySlot"][value="${slot}"]`) as HTMLInputElement | null;
+          if (checkbox) checkbox.checked = true;
+        });
+      }, 0);
+    }
 
-  // Get available slots from plan.slots
-  $: availableSlots = plan.slots.map(slot => slot.name);
+    // Restore delivery days
+    if (data.deliveryDays) {
+      selectedDeliveryDays = data.deliveryDays;
+      handleDeliveryDaysChange(data.deliveryDays);
+    }
+
+    // Restore selected days
+    if (data.selectedDays) {
+      selectedDays = data.selectedDays;
+    }
+
+    // Restore duration
+    if (data.deliveryDuration) {
+      // Use setTimeout to ensure DOM is ready
+      setTimeout(() => {
+        const select = document.getElementById('deliveryDuration') as HTMLSelectElement | null;
+        if (select) select.value = data.deliveryDuration;
+      }, 0);
+    }
+  }
 </script>
 
 <form id="mealPlanForm" class="space-y-6 max-w-[420px]" on:submit={handleSubmit} novalidate>
@@ -136,6 +215,9 @@
         </label>
       {/each}
     </div>
+    {#if formErrors.deliverySlots}
+      <p class="text-red-500 text-sm mt-1">{formErrors.deliverySlots}</p>
+    {/if}
   </fieldset>
 
   <fieldset class="space-y-4">
@@ -175,6 +257,9 @@
         </label>
       {/each}
     </div>
+    {#if formErrors.selectedDays}
+      <p class="text-red-500 text-sm mt-1">{formErrors.selectedDays}</p>
+    {/if}
   </fieldset>
 
   <fieldset>
