@@ -4,7 +4,7 @@
 			<aside
 				class="flex flex-col items-center pb-6 text-center lg:sticky lg:top-8 lg:max-w-[200px] lg:items-start lg:pr-6 lg:pb-0 lg:text-left"
 			>
-				<p class="mb-4 text-sm md:text-lg text-gray-500">22 May 2025</p>
+				<p class="mb-4 text-sm text-gray-500 md:text-lg">22 May 2025</p>
 				<div
 					class="flex w-full items-center space-x-4 border-y border-dashed border-gray-400 py-4 lg:flex-col lg:items-start"
 				>
@@ -12,7 +12,7 @@
 						<img src="/images/avanti-logo.png" alt="Avanti Fellows Logo" class="rounded-full" />
 					</div>
 					<div class="text-left">
-						<h3 class="text-sm md:text-lg font-semibold">Avanti Fellows</h3>
+						<h3 class="text-sm font-semibold md:text-lg">Avanti Fellows</h3>
 						<p class="text-gray-500">Unlocking the potential of rural India</p>
 					</div>
 				</div>
@@ -21,7 +21,7 @@
 			<div class="flex-1">
 				<div class="space-y-6 lg:max-w-[510px]">
 					<p
-						class="text-sm md:text-lg leading-relaxed first-letter:float-left first-letter:mr-1 first-letter:text-5xl first-letter:leading-none first-letter:font-bold"
+						class="text-sm leading-relaxed first-letter:float-left first-letter:mr-1 first-letter:text-5xl first-letter:leading-none first-letter:font-bold md:text-lg"
 					>
 						More of an accident that the Wenner-Gren Foundation for Anthropological Research exists.
 						In 1941 Axel Wenner-Gren, founder of the Electro-Lux Corporation (and one of the richest
@@ -32,7 +32,7 @@
 						Renamed in 1951, the Wenner-Gren Foundation quickly became a key actor in this
 						discipline.
 					</p>
-					<p class="text-sm md:text-lg leading-relaxed">
+					<p class="text-sm leading-relaxed md:text-lg">
 						It's somewhat of an accident that the Wenner-Gren Foundation for Anthropological
 						Research exists. In 1941, Axel Wenner-Gren, founder of the Electro-Lux Corporation (and
 						one of the richest men in the world), created the Viking Fund to resolve tax issues
@@ -54,8 +54,8 @@
 					fugit deserunt eos numquam ipsam repellendus dolorem.
 				</p>
 			</blockquote>
-			<div class="mx-auto my-8 h-10 md:h-16 w-[3px] bg-gray-400"></div>
-			<p class="text-center text-lg md:text-xl font-bold">
+			<div class="mx-auto my-8 h-10 w-[3px] bg-gray-400 md:h-16"></div>
+			<p class="text-center text-lg font-bold md:text-xl">
 				<cite class="text-gray-600 not-italic">John Doe</cite>
 			</p>
 		</div>
@@ -125,7 +125,7 @@
 				aut neque id esse! Reiciendis!
 			</p>
 
-			<p class="mt-6 flex text-sm md:text-lg font-bold uppercase md:mt-12">
+			<p class="mt-6 flex text-sm font-bold uppercase md:mt-12 md:text-lg">
 				<span class=" text-gray-500">TAGS</span>
 				<a href="/" class=" ml-5 hover:underline">child development</a> ,
 				<a href="/" class=" ml-2 hover:underline">education</a> ,
