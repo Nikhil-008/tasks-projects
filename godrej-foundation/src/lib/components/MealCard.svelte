@@ -11,7 +11,7 @@
 		<img
 			src={plan.product.variants[0].media[0].url}
 			alt={plan.name}
-			class="h-[180px] w-[150px] max-w-[150px] flex-none overflow-hidden rounded-lg object-cover object-center md:h-[280px] md:w-full md:max-w-full md:rounded-none"
+			class="h-auto w-[150px] max-w-[150px] flex-none overflow-hidden rounded-lg object-cover object-center md:h-[280px] md:w-full md:max-w-full md:rounded-none"
 		/>
 	{/if}
 	<div
