@@ -29,7 +29,10 @@
 	function calculateDurations(planDurations: any[]) {
 		return planDurations.map((d: { interval: string; frequency: number }) => {
 			const price = d.interval === 'week' ? 600 - d.frequency * 55 : 500 - d.frequency * 50;
-			return `${d.frequency} ${d.interval}${d.frequency > 1 ? 's' : ''} - ₹${price} per meal`;
+			return {
+				value: `${d.frequency} ${d.interval}${d.frequency > 1 ? 's' : ''}`,
+				display: `${d.frequency} ${d.interval}${d.frequency > 1 ? 's' : ''} - ₹${price} per meal`
+			};
 		});
 	}
 
@@ -219,7 +222,7 @@
 			{#each availableSlots as slot}
 				<label
 					for="slot-{slot}"
-					class="flex cursor-pointer items-center justify-center gap-2 rounded-[8px] border border-[#B5C4C0] px-4 py-2 has-[:checked]:border-[#225043] has-[:checked]:bg-[#22504314]"
+					class="flex cursor-pointer items-center justify-center gap-2 rounded-[8px] border border-[#B5C4C0] px-4 py-2 has-[:checked]:border-[#225043] has-[:checked]:bg-[#22504314] capitalize"
 				>
 					<input
 						type="checkbox"
@@ -228,7 +231,7 @@
 						value={slot}
 						class="relative h-5 w-5 cursor-pointer appearance-none rounded border-2 border-[#B5C4C0] bg-white checked:border-[#225043] checked:after:absolute checked:after:top-[2px] checked:after:left-[6px] checked:after:h-[10px] checked:after:w-[5px] checked:after:rotate-45 checked:after:border-r-2 checked:after:border-b-2 checked:after:border-[#225043] checked:after:content-['']"
 					/>
-					<span class="capitalize">{slot}</span>
+					{slot}
 				</label>
 			{/each}
 		</div>
@@ -243,7 +246,7 @@
 			{#each ['weekdays', 'everyday', 'custom'] as option}
 				<label
 					for="delivery-{option}"
-					class="flex flex-1 cursor-pointer items-center justify-center border-r border-[#225043] px-4 py-2 last:border-r-0 has-[:checked]:bg-[#22504314]"
+					class="flex flex-1 cursor-pointer items-center justify-center border-r border-[#225043] px-4 py-2 last:border-r-0 has-[:checked]:bg-[#22504314] capitalize"
 				>
 					<input
 						type="radio"
@@ -254,7 +257,7 @@
 						bind:group={selectedDeliveryDays}
 						on:change={() => handleDeliveryDaysChange(option)}
 					/>
-					<span class="capitalize">{option}</span>
+					{option}
 				</label>
 			{/each}
 		</div>
@@ -266,7 +269,7 @@
 			{#each allDays as day}
 				<label
 					for="day-{day}"
-					class="flex cursor-pointer items-center justify-center gap-2 rounded-[8px] border border-[#B5C4C0] px-4 py-2 has-[:checked]:border-[#225043] has-[:checked]:bg-[#22504314]"
+					class="flex cursor-pointer items-center justify-center gap-2 rounded-[8px] border border-[#B5C4C0] px-4 py-2 has-[:checked]:border-[#225043] has-[:checked]:bg-[#22504314] capitalize"
 				>
 					<input
 						type="checkbox"
@@ -276,7 +279,7 @@
 						on:change={() => toggleDay(day)}
 						class="relative h-5 w-5 cursor-pointer appearance-none rounded border-2 border-[#B5C4C0] bg-white checked:border-[#225043] checked:after:absolute checked:after:top-[2px] checked:after:left-[6px] checked:after:h-[10px] checked:after:w-[5px] checked:after:rotate-45 checked:after:border-r-2 checked:after:border-b-2 checked:after:border-[#225043] checked:after:content-['']"
 					/>
-					<span class="capitalize">{day}</span>
+					{day}
 				</label>
 			{/each}
 		</div>
@@ -292,8 +295,9 @@
 			name="deliveryDuration"
 			class="mt-2 block w-full cursor-pointer rounded-[8px] border-1 border-[#225043] bg-white px-4 py-2 text-[#26332F] focus:border-[#225043] focus:ring-1 focus:outline-none"
 		>
+			<!-- <option value="">Select duration</option> -->
 			{#each durations as duration}
-				<option value={duration}>{duration}</option>
+				<option value={duration.value}>{duration.display}</option>
 			{/each}
 		</select>
 	</fieldset>
